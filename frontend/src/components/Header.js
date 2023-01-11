@@ -26,7 +26,7 @@ const Header = () => {
               {!user ? <Nav.Link href='/login'>Login</Nav.Link> : null}
               {user && user.role === "0" ? (
                 <NavDropdown title='Panel' id='basic-nav-dropdown'>
-                  <NavDropdown.Item href='/admin/userlist'>All Users</NavDropdown.Item>
+                  <NavDropdown.Item href='/admin/userlist/'>All Users</NavDropdown.Item>
                   <NavDropdown.Item href='/'>All Projects</NavDropdown.Item>
                 </NavDropdown>
               ) : null}
@@ -37,7 +37,7 @@ const Header = () => {
                 >
                   <NavDropdown.Item href='/profile'>Profile</NavDropdown.Item>
                   {user && user.role === '2' ? 
-                  <NavDropdown.Item href='/usertasks'>Your tasks</NavDropdown.Item>
+                  <NavDropdown.Item href={`/usertasks/${user._id}`}>Your tasks</NavDropdown.Item>
                 : null}
                   <NavDropdown.Item onClick={logoutHandler}>
                     Logout

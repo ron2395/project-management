@@ -121,7 +121,7 @@ const ProjectScreen = () => {
   }
 
   const editRemarkPageHandler = (remarkId) => {
-    navigate(`/project/${id}/remark/${remarkId}`)
+    navigate(`/project/${id}/remark/${remarkId}/edit`)
   }
 
   return (
@@ -151,7 +151,15 @@ const ProjectScreen = () => {
                           <div className='ms-2 me-auto'>
                             <div className='fw-bold'>
                               {dev.image ? (
-                                <Image roundedCircle src={`http:localhost:3800${dev.image}`} />
+                                <Image
+                                  roundedCircle
+                                  style={{ width: "4rem", height: "4rem" }}
+                                  src={
+                                    process.env.NODE_ENV === "development"
+                                      ? `http://localhost:3800${dev.image}`
+                                      : `http://project-manager-x-api.onrender.com${dev.image}`
+                                  }
+                                />
                               ) : (
                                 <PersonCircle className='me-1' />
                               )}
@@ -219,14 +227,14 @@ const ProjectScreen = () => {
                       project.plannedStart.substring(0, 10)}
                   </Card.Text>
                   <Card.Text>
-                    <span className='fw-bold'>Planned End:</span>{" "}
-                    {project.plannedEnd && project.plannedEnd.substring(0, 10)}
-                  </Card.Text>
-                  <Card.Text>
                     <span className='fw-bold'>Actual Start:</span>{" "}
                     {project.actualStart
                       ? project.actualStart.substring(0, 10)
                       : "Not started yet"}
+                  </Card.Text>
+                  <Card.Text>
+                    <span className='fw-bold'>Planned End:</span>{" "}
+                    {project.plannedEnd && project.plannedEnd.substring(0, 10)}
                   </Card.Text>
                   {project.actualEnd ? (
                     <Card.Text>
@@ -263,6 +271,7 @@ const ProjectScreen = () => {
                       <Form.Label>Leave a remark:</Form.Label>
                       <Form.Control
                         rows={2}
+                        maxLength={100}
                         as='textarea'
                         value={projectRemark}
                         onChange={(e) => setProjectRemark(e.target.value)}
@@ -296,8 +305,9 @@ const ProjectScreen = () => {
                             <div className='ms-2 me-auto'>
                               <div className='fw-bold d-flex justify-content-between'>
                                 {remark.user.firstName} {remark.user.lastName}
-                                {userInfo && userInfo._id.toString() ===
-                                remark.user._id.toString() ? (
+                                {userInfo &&
+                                userInfo._id.toString() ===
+                                  remark.user._id.toString() ? (
                                   <div>
                                     <PencilSquare
                                       style={{
@@ -305,7 +315,9 @@ const ProjectScreen = () => {
                                         fontSize: "1.3rem",
                                       }}
                                       className='me-3'
-                                      onClick={() => editRemarkPageHandler(remark._id)}
+                                      onClick={() =>
+                                        editRemarkPageHandler(remark._id)
+                                      }
                                     />
                                     <Trash
                                       style={{
@@ -361,7 +373,9 @@ const ProjectScreen = () => {
                   ) : taskListSuccess ? (
                     <ListGroup>
                       {tasks && tasks.length
-                        ? tasks.map((task, i) => <Task key={i} task={task} />)
+                        ? tasks.map((task, i) => (
+                            <Task projectid={id} key={i} task={task} />
+                          ))
                         : "No tasks added"}
                     </ListGroup>
                   ) : taskListError ? (

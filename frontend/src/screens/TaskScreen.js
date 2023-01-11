@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Trash, PencilSquare } from "react-bootstrap-icons";
 import {
@@ -36,15 +36,18 @@ const dateDelay = (date1, date2) => {
   const d1 = new Date(date1.substring(0, 10));
   const d2 = new Date(date2.substring(0, 10));
   return (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24);
-};
+}
 
 const TaskScreen = () => {
-  const [taskRemark, setTaskRemark] = useState("");
+  const [taskRemark, setTaskRemark] = useState("")
 
-  const { taskid, id } = useParams()
+  const { taskid } = useParams()
 
+  const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const { projectid } = location.state
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -89,7 +92,7 @@ const TaskScreen = () => {
 
     useEffect(() => {
       dispatch(listTaskDetail(taskid))
-      dispatch(listProjectDetail(id));
+      dispatch(listProjectDetail(projectid));
       if (successCreateRemark) {
         setTaskRemark('');
         setTimeout(
@@ -113,13 +116,12 @@ const TaskScreen = () => {
         dispatch({
           type: TASK_DESTROY_RESET,
         });
-        navigate(`/project/${id}`);
+        navigate(`/project/${projectid}`);
       }
     }, [
       dispatch,
       successCreateRemark,
       taskid,
-      id,
       successDeleteRemark,
       navigate,
       successDelete,
@@ -130,9 +132,9 @@ const TaskScreen = () => {
     dispatch(createTaskRemark(task._id, taskRemark))
   }
 
-  const deleteRemark = (id) => {
+  const deleteRemark = (projectid) => {
     if (window.confirm("Are you sure?")) {
-        dispatch(deleteTaskRemark(task._id, id));
+        dispatch(deleteTaskRemark(task._id, projectid));
     }
   };
 
@@ -142,11 +144,15 @@ const TaskScreen = () => {
     }
   }
 
+  const editRemarkPageHandler = (remarkid) => {
+    navigate(`/task/${taskid}/remark/${remarkid}/edit`);
+  }
+
   return (
     <Container>
       <Row>
         <Col>
-          <Link to={`/project/${project._id}`} className='btn btn-light mb-3'>
+          <Link to={`/project/${projectid}`} className='btn btn-light mb-3'>
             Go Back
           </Link>
         </Col>
@@ -217,10 +223,7 @@ const TaskScreen = () => {
                     {task.title && task.title.toUpperCase()}
                   </h2>
                   <div>
-                    <LinkContainer
-                      className='me-1'
-                      to={`/project/${id}/task/${taskid}/edit`}
-                    >
+                    <LinkContainer className='me-1' to={`/task/${taskid}/edit`}>
                       <Button variant='secondary'>
                         <PencilSquare />
                       </Button>
@@ -268,14 +271,14 @@ const TaskScreen = () => {
                     {task.plannedStart && task.plannedStart.substring(0, 10)}
                   </Card.Text>
                   <Card.Text>
-                    <span className='fw-bold'>Planned End:</span>{" "}
-                    {task.plannedEnd && task.plannedEnd.substring(0, 10)}
-                  </Card.Text>
-                  <Card.Text>
                     <span className='fw-bold'>Actual Start:</span>{" "}
                     {task.actualStart
                       ? task.actualStart.substring(0, 10)
                       : "Not started yet"}
+                  </Card.Text>
+                  <Card.Text>
+                    <span className='fw-bold'>Planned End:</span>{" "}
+                    {task.plannedEnd && task.plannedEnd.substring(0, 10)}
                   </Card.Text>
                   {task.actualEnd ? (
                     <Card.Text>
@@ -340,19 +343,32 @@ const TaskScreen = () => {
                     <ListGroup className='mt-3'>
                       {task.remarks && task.remarks.length ? (
                         task.remarks.map((remark) => (
-                          <ListGroup.Item key={task._id}>
+                          <ListGroup.Item key={remark._id}>
                             <div className='ms-2 me-auto'>
                               <div className='fw-bold d-flex justify-content-between'>
                                 {remark.user.firstName} {remark.user.lastName}
-                                {userInfo && userInfo._id.toString() ===
-                                remark.user._id.toString() ? (
-                                  <Trash
-                                    style={{
-                                      cursor: "pointer",
-                                      fontSize: "1.3rem",
-                                    }}
-                                    onClick={() => deleteRemark(remark._id)}
-                                  />
+                                {userInfo &&
+                                userInfo._id.toString() ===
+                                  remark.user._id.toString() ? (
+                                  <div>
+                                    <PencilSquare
+                                      style={{
+                                        cursor: "pointer",
+                                        fontSize: "1.3rem",
+                                      }}
+                                      className='me-3'
+                                      onClick={() =>
+                                        editRemarkPageHandler(remark._id)
+                                      }
+                                    />
+                                    <Trash
+                                      style={{
+                                        cursor: "pointer",
+                                        fontSize: "1.3rem",
+                                      }}
+                                      onClick={() => deleteRemark(remark._id)}
+                                    />
+                                  </div>
                                 ) : null}
                               </div>
                               <Badge className='ms-auto' bg='primary' pill>

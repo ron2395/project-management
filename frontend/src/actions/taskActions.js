@@ -24,6 +24,9 @@ import {
   TASK_USER_LIST_REQUEST,
   TASK_USER_LIST_SUCCESS,
   TASK_USER_LIST_FAILURE,
+  TASK_REMARK_UPDATE_REQUEST,
+  TASK_REMARK_UPDATE_SUCCESS,
+  TASK_REMARK_UPDATE_FAILURE
 } from "../constants/taskConstants";
 
 export const createTask = (
@@ -299,3 +302,43 @@ export const listUserTasks = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+export const updateTaskRemark =
+  ({ comment, remarkUserId, remarkId, taskId }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: TASK_REMARK_UPDATE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await API.put(
+        `/tasks/${taskId}/remarks/${remarkId}`,
+        { comment, remarkUserId },
+        config
+      );
+
+      dispatch({
+        type: TASK_REMARK_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: TASK_REMARK_UPDATE_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

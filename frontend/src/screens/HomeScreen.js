@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import UserTaskList from '../components/UserTaskList'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import TimeGraph from '../components/TimeGraph'
 
 const HomeScreen = () => {
   const location = useLocation()
@@ -23,12 +24,13 @@ const HomeScreen = () => {
     <Container >
       {userInfo ?
       <Row>
-        <Col md={5} lg={4} xl={3}>
+        <Col lg={5} xl={4}>
             <DashBoard />
+            <TimeGraph />
         </Col>
-        <Col md={7} lg={8} xl={9}>
-          {location.pathname === '/usertasks' ?
-            <UserTaskList /> : <Display />
+        <Col lg={7} xl={8}>
+          {location.pathname === '/' ?
+            <Display /> : <UserTaskList />
           }
         </Col>
       </Row> : null}

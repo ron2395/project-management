@@ -28,6 +28,10 @@ import {
   TASK_USER_LIST_REQUEST,
   TASK_USER_LIST_SUCCESS,
   TASK_USER_LIST_FAILURE,
+  TASK_REMARK_UPDATE_REQUEST,
+  TASK_REMARK_UPDATE_SUCCESS,
+  TASK_REMARK_UPDATE_FAILURE,
+  TASK_REMARK_UPDATE_RESET
 } from "../constants/taskConstants";
 
 export const createTaskReducer = (state = {}, action) => {
@@ -153,6 +157,21 @@ export const taskUserListReducer = (state = { tasks: [] }, action) => {
       };
     case TASK_USER_LIST_FAILURE:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
+export const taskRemarkUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TASK_REMARK_UPDATE_REQUEST:
+      return { loading: true };
+    case TASK_REMARK_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case TASK_REMARK_UPDATE_FAILURE:
+      return { loading: false, error: action.payload };
+    case TASK_REMARK_UPDATE_RESET:
+      return {};
     default:
       return state;
   }

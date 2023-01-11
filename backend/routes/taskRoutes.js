@@ -11,11 +11,13 @@ import {
     createTaskRemark,
     getAllRemarksByTaskId,
     deleteTaskRemark,
-    getUserTasks
+    getUserTasks,
+    updateTaskRemark
 } from '../controllers/taskControllers.js'
 
-router.route('/:id/remarks/:remarkId')
-        .delete(protect, deleteTaskRemark)
+router.route("/:taskid/remarks/:remarkId")
+  .delete(protect, deleteTaskRemark)
+  .put(protect, updateTaskRemark);
 
 router.route('/:id/remarks')
 .post(protect, createTaskRemark)

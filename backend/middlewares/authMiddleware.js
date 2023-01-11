@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import Project from "../models/projectModel.js"
 import User from "../models/userModel.js"
 
 export const admin = (req, res, next) => {

@@ -12,14 +12,12 @@ import { useEffect, useState } from "react";
 import { PersonCircle } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import CustomCard from "../components/CustomCard";
-import { getUserProfile } from "../actions/userActions";
+import { getUserProfile, updateUserProfile } from "../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
-import { updateUserProfile } from "../actions/userActions";
 import API from "../api";
-import { USER_PROFILE_UPDATE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = () => {
   const [editUserDetails, setEditUserDetails] = useState(false);
@@ -108,14 +106,18 @@ const ProfileScreen = () => {
                 <Image
                   style={{ height: "12rem", width: "12rem" }}
                   className='rounded-circle'
-                  src={`http://localhost:3800${user.image}`}
+                  src={
+                    process.env.NODE_ENV === "development"
+                    ? `http://localhost:3800${user.image}`
+                    : `http://project-manager-x-api.onrender.com${user.image}`
+                  }
                 />
               ) : (
                 <Card.Title>
                   <PersonCircle style={{ fontSize: "7rem" }} className='mb-3' />
                 </Card.Title>
               )}
-              <Card.Body className="mt-3">
+              <Card.Body className='mt-3'>
                 <Card.Text as='h3'>
                   {user.firstName} {user.lastName}
                 </Card.Text>

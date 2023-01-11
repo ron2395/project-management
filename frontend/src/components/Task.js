@@ -2,13 +2,13 @@ import { Fragment } from "react";
 import { LinkContainer } from 'react-router-bootstrap'
 import { Button, ListGroup } from "react-bootstrap";
 
-const Task = ({ task }) => {
+const Task = ({ task, projectid }) => {
 
   return (
     <ListGroup.Item key={task._id}>
       <div className='d-flex justify-content-between'>
         <h5>Task: {task.title.toUpperCase()}</h5>
-        <LinkContainer to={`/project/${task.projectId}/task/${task._id}`}>
+        <LinkContainer to={`/task/${task._id}`} state={{ projectid }}>
           <Button variant='primary' className='btn-sm'>Details</Button>
         </LinkContainer>
       </div>

@@ -126,13 +126,16 @@ export const deleteProjectRemark = async(req, res) => {
     }
 }
 
-//fix
 export const updateProjectRemark = async(req, res) => {
     const { id, remarkId } = req.params;
-    const { comment } = req.body;
-    const remark = await Project.updateOne(
-   { _id: id },
-   { $set: { "remarks.$[remark].comment" : comment } },
-   { arrayFilters: [ { "remark._id": remarkId } ] })
-    res.json(remark)
+    const { comment, remarkUserId } = req.body;
+        if(req.user._id.toString() === remarkUserId){
+            const remark = await Project.updateOne(
+            { _id: id },
+            { $set: { "remarks.$[elem].comment" : comment } },
+            { arrayFilters: [ { "elem._id": remarkId } ] })
+            res.json(remark)
+        }else{
+            res.status(401).send('Not allowed')
+        }
 }

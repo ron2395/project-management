@@ -25,6 +25,7 @@ import {
   projectRemarkDestroyReducer,
   projectUpdateReducer,
   projectDestroyReducer,
+  projectRemarkUpdateReducer,
 } from "../reducers/projectReducers";
 import {
   createTaskReducer,
@@ -35,6 +36,7 @@ import {
   taskRemarkDestroyReducer,
   taskUpdateReducer,
   taskUserListReducer,
+  taskRemarkUpdateReducer,
 } from "../reducers/taskReducers";
 
 const reducer = combineReducers({
@@ -55,6 +57,7 @@ const reducer = combineReducers({
   projectRemarkDestroy: projectRemarkDestroyReducer,
   projectRemarkCreate: projectRemarkCreateReducer,
   projectDestroy: projectDestroyReducer,
+  projectRemarkUpdate: projectRemarkUpdateReducer,
   taskCreate: createTaskReducer,
   taskList: taskListReducer,
   taskDetail: taskDetailReducer,
@@ -62,7 +65,8 @@ const reducer = combineReducers({
   taskRemarkCreate: taskRemarkCreateReducer,
   taskRemarkDestroy: taskRemarkDestroyReducer,
   taskUpdate: taskUpdateReducer,
-  taskUserList: taskUserListReducer
+  taskUserList: taskUserListReducer,
+  taskRemarkUpdate: taskRemarkUpdateReducer
 });
 
 const userInfoInStorage = localStorage.getItem("userInfo")

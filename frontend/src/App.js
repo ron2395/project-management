@@ -15,6 +15,8 @@ import ProjectEditScreen from './screens/ProjectEditScreen';
 import NewTaskScreen from './screens/NewTaskScreen';
 import TaskScreen from './screens/TaskScreen';
 import TaskEditScreen from './screens/TaskEditScreen';
+import ProjectRemarkEditScreen from './screens/ProjectRemarkEditScreen';
+import TaskRemarkEditScreen from './screens/TaskRemarkEditScreen';
 
 function App() {
   return (
@@ -37,8 +39,18 @@ function App() {
               <Route path='new' element={<NewProjectScreen />} />
               <Route path=':id' element={<ProjectScreen />} />
               <Route path=':id/task/new' element={<NewTaskScreen />} />
-              <Route path=':id/task/:taskid' element={<TaskScreen />} />
-              <Route path=':id/task/:taskid/edit' element={<TaskEditScreen />} />
+              <Route
+                path=':id/remark/:remarkid/edit'
+                element={<ProjectRemarkEditScreen />}
+              />
+            </Route>
+            <Route path='/task'>
+              <Route path=':taskid/' element={<TaskScreen />} />
+              <Route path=':taskid/edit' element={<TaskEditScreen />} />
+              <Route
+                path=':taskid/remark/:remarkid/edit'
+                element={<TaskRemarkEditScreen />}
+              />
             </Route>
           </Routes>
         </Container>

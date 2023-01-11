@@ -16,13 +16,13 @@ const toDate = (dateStr) => {
 };
 
 const TaskEditScreen = () => {
-  const { taskid, id } = useParams();
+  const { taskid } = useParams();
 
   const [actualStart, setActualStart] = useState("")
   const [actualEnd, setActualEnd] = useState("")
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -39,7 +39,7 @@ const TaskEditScreen = () => {
         dispatch({
           type: TASK_UPDATE_RESET,
         });
-        navigate(`/project/${id}/task/${taskid}`);
+        navigate(`/task/${taskid}`, { state: {projectid: task.projectId} });
       } else {
         if (task.actualStart) {
           setActualStart(task.actualStart);
@@ -51,7 +51,7 @@ const TaskEditScreen = () => {
     } else {
       navigate("/login");
     }
-  }, [dispatch, userInfo, task, taskid, id, navigate, successUpdate]);
+  }, [dispatch, userInfo, task, taskid, navigate, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -68,7 +68,7 @@ const TaskEditScreen = () => {
     <FormContainer>
       <Row className='justify-content-md-center'>
         <Col lg={6}>
-          <Link to={`/project/${id}/task/${taskid}`} className='btn btn-light mb-3'>
+          <Link to={`/task/${taskid}`} state={ {projectid: task.projectId} } className='btn btn-light mb-3'>
             Go Back
           </Link>
           <CustomCard>
