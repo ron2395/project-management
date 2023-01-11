@@ -59,17 +59,23 @@ const ProjectRemarkEditScreen = () => {
             <CustomCard className='mb-3'>
               <Row className='d-flex-inline'>
                 <Col md={2} lg={2} sm={3} xs={5}>
-                  {user && user.image ?
-                  <Image
-                    thumbnail
-                    roundedCircle
-                    src={
-                      process.env.NODE_ENV === "development"
-                        ? `http://localhost:3800${user.image}`
-                        : `http://project-manager-x-api.onrender.com${user.image}`
-                    }
-                    style={{ width: "4rem", height: "4rem" }}
-                  /> : <PersonCircle className='me-1' />}
+                  {user && user.image ? (
+                    <Image
+                      thumbnail
+                      roundedCircle
+                      src={
+                        process.env.NODE_ENV === "development"
+                          ? `http://localhost:3800${user.image}`
+                          : `http://project-manager-x-api.onrender.com${user.image}`
+                      }
+                      style={{ width: "4rem", height: "4rem" }}
+                    />
+                  ) : (
+                    <PersonCircle
+                      className='me-1'
+                      style={{ width: "3.5rem", height: "3.5rem" }}
+                    />
+                  )}
                 </Col>
                 <Col lg={5} md={5} sm={5} xs={7}>
                   <h6>

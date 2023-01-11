@@ -67,7 +67,11 @@ const TaskRemarkEditScreen = () => {
     <FormContainer>
       <Row className='justify-content-md-center'>
         <Col lg={6}>
-          <Link to={`/task/${taskid}`} state={ {projectid: task.projectId} } className='btn btn-light mb-3'>
+          <Link
+            to={`/task/${taskid}`}
+            state={{ projectid: task.projectId }}
+            className='btn btn-light mb-3'
+          >
             Go Back
           </Link>
           <CustomCard>
@@ -86,7 +90,10 @@ const TaskRemarkEditScreen = () => {
                       style={{ width: "4rem", height: "4rem" }}
                     />
                   ) : (
-                    <PersonCircle className='me-1' />
+                    <PersonCircle
+                      className='me-1'
+                      style={{ width: "3.5rem", height: "3.5rem" }}
+                    />
                   )}
                 </Col>
                 <Col lg={5} md={5} sm={5} xs={7}>
