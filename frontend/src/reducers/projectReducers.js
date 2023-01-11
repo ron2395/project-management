@@ -25,6 +25,10 @@ import {
   PROJECT_DESTROY_SUCCESS,
   PROJECT_DESTROY_FAILURE,
   PROJECT_DESTROY_RESET,
+  PROJECT_REMARK_UPDATE_REQUEST,
+  PROJECT_REMARK_UPDATE_SUCCESS,
+  PROJECT_REMARK_UPDATE_FAILURE,
+  PROJECT_REMARK_UPDATE_RESET
 } from "../constants/projectContants";
 
 export const createProjectReducer = (state = {}, action) => {
@@ -135,3 +139,18 @@ export const projectDestroyReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const projectRemarkUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PROJECT_REMARK_UPDATE_REQUEST:
+      return { loading: true };
+    case PROJECT_REMARK_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case PROJECT_REMARK_UPDATE_FAILURE:
+      return { loading: false, error: action.payload };
+    case PROJECT_REMARK_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+}

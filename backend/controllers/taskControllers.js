@@ -105,20 +105,27 @@ export const getAllRemarksByTaskId = async(req, res) => {
 }
 
 export const deleteTaskRemark = async(req, res) => {
-    const { id, remarkId } = req.params
-    const remark = await Task.updateOne({ _id: id },
+    const { taskid, remarkId } = req.params
+    const remark = await Task.updateOne({ _id: taskid },
         { $pull: { 'remarks': { _id: remarkId } }})
     if(remark){
         res.status(201).send('Remark deleted')
     }
 }
 
-//fix
 export const updateTaskRemark = async(req, res) => {
-    const { id, remarkId } = req.params
-    const { comment } = req.body
-    const remark = await Task.updateOne({ 'remarks._id': id },
-                { $set: { 'remarks.$[t].comment': comment }})
+    const { taskid, remarkId } = req.params;
+    const { comment, remarkUserId } = req.body;
+    if (req.user._id.toString() === remarkUserId) {
+      const remark = await Task.updateOne(
+        { _id: taskid },
+        { $set: { "remarks.$[elem].comment": comment } },
+        { arrayFilters: [{ "elem._id": remarkId }] }
+      );
+      res.json(remark);
+    } else {
+      res.status(401).send("Not allowed");
+    }
 }
 
 export const getUserTasks = async(req, res) => {

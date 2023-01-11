@@ -1,5 +1,6 @@
 import CustomCard from './CustomCard';
 import { useSelector } from 'react-redux'
+import { Spinner } from 'react-bootstrap';
 
 const DashBoard = () => {
   const userLogin = useSelector(state => state.userLogin)
@@ -9,9 +10,9 @@ const DashBoard = () => {
   const { projects } = projectList
 
   return (
-    <CustomCard className='mb-3 bg-dark text-white'>
-      <h2 className='text-center text-nowrap'>DASHBOARD</h2>
-      <h4 className='text-center'>
+    <CustomCard className='mb-3 bg-dark text-white text-center'>
+      <h2 className='text-nowrap'>DASHBOARD</h2>
+      <h4>
         {user.firstName} {user.lastName}
       </h4>
       <hr />
@@ -30,7 +31,7 @@ const DashBoard = () => {
       <p>Email: {user.email}</p>
       <p>
         {user.role === "0" ? "Total projects:" : "User Projects:"}{" "}
-        {projects.length}
+        {projects ? projects.length : <Spinner />}
       </p>
     </CustomCard>
   );

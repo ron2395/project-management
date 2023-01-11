@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { createTask } from "../actions/taskActions";
 import { listProjectDetail } from "../actions/projectActions";
-import { getUserListByRole } from "../actions/userActions";
 import Message from "../components/Message";
 import CustomCard from "../components/CustomCard";
 import FormContainer from "../components/FormContainer";
@@ -37,19 +36,12 @@ const NewTaskScreen = () => {
   const taskCreate = useSelector((state) => state.taskCreate);
   const { loading, error, success } = taskCreate;
 
-  const userListByRole = useSelector((state) => state.userListByRole);
-  const {
-    loading: loadingDevelopers,
-    users: developers,
-  } = userListByRole;
-
   useEffect(() => {
     if(userInfo.role === '0' || userInfo.role === '1'){
     dispatch(listProjectDetail(projectId))
     dispatch({
       type: TASK_CREATE_RESET,
     });
-    dispatch(getUserListByRole("2"));
     if (success) {
       navigate(`/project/${projectId}`);
     }
@@ -137,9 +129,9 @@ const NewTaskScreen = () => {
                   value={responsible}
                   onChange={(e) => setResponsible(e.target.value)}
                 >
-                  <option value=''>Select Developer</option>
-                  {!loadingDevelopers && developers
-                    ? developers.map((dev, i) => (
+                  <option value=''>Involved developers</option>
+                  {project && project.developers ?
+                  project.developers.map((dev, i) => (
                         <option key={i} value={dev._id}>
                           {dev.firstName} {dev.lastName} -{" "}
                           {dev.email}

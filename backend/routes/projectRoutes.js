@@ -15,7 +15,7 @@ import {
 import { createTask, getTasksByProjectId } from '../controllers/taskControllers.js';
 
 router.route('/:id/tasks')
-  .get(protect, projectManager, getTasksByProjectId)
+  .get(protect, getTasksByProjectId)
   .post(protect, projectManager, createTask);
 
 router.route('/:id/remarks/:remarkId')

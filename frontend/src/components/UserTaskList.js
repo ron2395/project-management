@@ -35,9 +35,9 @@ const UserTaskList = () => {
       </Card.Title>
       <ListGroup>
         {error ? <Message variant='danger'>{error}</Message> : null}
-        {!loading ? <Loader /> : success && tasks.length ?
+        {loading ? <Loader /> : success && tasks.length ?
         tasks.map((task, i) => <Task task={task} />) :
-        <h2>No tasks</h2>}
+        <h2 className="mt-4">No tasks assigned</h2>}
       </ListGroup>
     </CustomCard>
   );

@@ -21,6 +21,9 @@ import {
   PROJECT_DESTROY_REQUEST,
   PROJECT_DESTROY_SUCCESS,
   PROJECT_DESTROY_FAILURE,
+  PROJECT_REMARK_UPDATE_REQUEST,
+  PROJECT_REMARK_UPDATE_SUCCESS,
+  PROJECT_REMARK_UPDATE_FAILURE
 } from "../constants/projectContants";
 
 export const createProject = (title, plannedStart, plannedEnd, description, manager) => async(dispatch, getState) => {
@@ -254,3 +257,42 @@ export const destroyProject = (id) => async (dispatch, getState) => {
       });
     }
   }
+
+  export const updateProjectRemark = ({ comment, remarkUserId, remarkId, projectId }) =>
+    async (dispatch, getState) => {
+      try {
+        dispatch({
+          type: PROJECT_REMARK_UPDATE_REQUEST,
+        });
+
+        const {
+          userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+
+        const { data } = await API.put(
+          `/projects/${projectId}/remarks/${remarkId}`,
+          { comment, remarkUserId },
+          config
+        );
+
+        dispatch({
+          type: PROJECT_REMARK_UPDATE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: PROJECT_REMARK_UPDATE_FAILURE,
+          payload:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        });
+      }
+    };
