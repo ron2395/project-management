@@ -32,7 +32,7 @@ const NewProjectScreen = () => {
   const { loading, error, success, project } = projectCreate;
 
   const userListByRole = useSelector((state) => state.userListByRole);
-  const { loading: loadingManagers, users: managers, error: errorManagers } = userListByRole
+  const { loading: loadingManagers, users: managers } = userListByRole
 
   useEffect(() => {
     dispatch({

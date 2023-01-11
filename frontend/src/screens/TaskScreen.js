@@ -122,6 +122,7 @@ const TaskScreen = () => {
       dispatch,
       successCreateRemark,
       taskid,
+      projectid,
       successDeleteRemark,
       navigate,
       successDelete,

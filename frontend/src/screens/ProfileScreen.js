@@ -53,7 +53,15 @@ const ProfileScreen = () => {
         setEmail(user.email);
         setImage(user.image)
       }
-  }, [navigate, dispatch, userInfo, success]);
+  }, [navigate,
+      dispatch,
+      userInfo,
+      success,
+      user.email,
+      user.firstName,
+      user.lastName,
+      user.image
+    ]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];

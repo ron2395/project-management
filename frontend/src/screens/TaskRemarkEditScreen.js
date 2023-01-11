@@ -49,7 +49,7 @@ const TaskRemarkEditScreen = () => {
     } else {
       navigate("/login");
     }
-  }, [navigate, dispatch, successUpdate, userInfo, taskid]);
+  }, [navigate, dispatch, successUpdate, userInfo, taskid, task.projectId]);
 
   const submitHandler = (e) => {
     e.preventDefault();

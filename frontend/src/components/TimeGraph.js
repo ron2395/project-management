@@ -71,6 +71,9 @@ const TimeGraph = () => {
 
     const options = {
       responsive: true,
+      layout: {
+            padding: -2
+        },
       plugins: {
         legend: {
           position: "top",
