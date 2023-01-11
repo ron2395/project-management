@@ -148,12 +148,12 @@ const ProjectScreen = () => {
                     {project.developers && project.developers.length ? (
                       project.developers.map((dev) => (
                         <ListGroup.Item key={dev._id}>
-                          <div className='ms-2 me-auto'>
-                            <div className='fw-bold'>
+                          <Row>
+                            <Col md={1} sm={1} lg={3} xl={2} className='me-3'>
                               {dev.image ? (
                                 <Image
                                   roundedCircle
-                                  style={{ width: "4rem", height: "4rem" }}
+                                  style={{ width: "2.7rem", height: "2.7rem" }}
                                   src={
                                     process.env.NODE_ENV === "development"
                                       ? `http://localhost:3800${dev.image}`
@@ -161,12 +161,18 @@ const ProjectScreen = () => {
                                   }
                                 />
                               ) : (
-                                <PersonCircle className='me-1' />
+                                <PersonCircle
+                                  style={{ width: "2.7rem", height: "2.7rem" }}
+                                />
                               )}
-                              {dev.firstName} {dev.lastName}
-                            </div>
-                            Developer
-                          </div>
+                            </Col>
+                            <Col md={7} sm={7} lg={7} xl={7}>
+                              <h6>
+                                {dev.firstName} {dev.lastName}
+                              </h6>
+                              <span>Developer</span>
+                            </Col>
+                          </Row>
                         </ListGroup.Item>
                       ))
                     ) : (

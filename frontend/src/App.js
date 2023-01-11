@@ -30,10 +30,8 @@ function App() {
             <Route path='/register' element={<RegisterScreen />} />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/profile' element={<ProfileScreen />} />
-            <Route path='/admin'>
-              <Route path='userlist' element={<UserListScreen />} />
-              <Route path='user/:id/edit' element={<UserEditScreen />} />
-            </Route>
+            <Route path='/admin/userlist' element={<UserListScreen />} />
+            <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
             <Route path='/project'>
               <Route path=':id/edit' element={<ProjectEditScreen />} />
               <Route path='new' element={<NewProjectScreen />} />

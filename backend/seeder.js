@@ -11,6 +11,7 @@ connect(process.env.MONGO_URI)
   })
 
 const userSeed = async() => {
+    await User.deleteMany({})
     await User.create({
       firstName: "Admin",
       lastName: "User",
