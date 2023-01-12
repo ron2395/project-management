@@ -1,4 +1,3 @@
-import path from 'path'
 import express from 'express'
 import 'dotenv/config'
 import cors from 'cors'
@@ -29,11 +28,6 @@ app.use('/users', userRoutes)
 app.use("/projects", projectRoutes);
 app.use('/tasks', taskRoutes)
 app.use('/upload', uploadRoutes);
-
-
-if(process.env.NODE_ENV === 'production'){
-  app.use(express.static(path.join(__dirname, 'frontend/build')))
-}
 
 connect(process.env.MONGO_URI).then(() => {
     console.log('connected to db')
