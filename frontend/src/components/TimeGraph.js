@@ -1,4 +1,5 @@
 import { Bar } from 'react-chartjs-2'
+import { useMediaQuery } from "react-responsive";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -49,20 +50,22 @@ const TimeGraph = () => {
     const endDelayData = projects.map((project) =>
         endDateDelay(project.plannedEnd, project.actualEnd));
 
+    const isMobile = useMediaQuery({ query: `(max-width: 480px)` })
+
     const data = {
       labels: labels,
       datasets: [
         {
           label: "Start delay",
-          barThickness: 20,
-          indexAxis: "y",
+          barThickness: !isMobile ? 15 : 10,
+          indexAxis: "x",
           data: startDelayData,
           backgroundColor: "rgba(255, 30, 30, 0.70)",
         },
         {
           label: "End delay",
-          barThickness: 20,
-          indexAxis: "y",
+          barThickness: !isMobile ? 15 : 10,
+          indexAxis: "x",
           data: endDelayData,
           backgroundColor: "rgba(132, 181, 255, 0.70)",
         },
@@ -72,10 +75,11 @@ const TimeGraph = () => {
     const options = {
       responsive: true,
       layout: {
-            padding: 0
+            padding: -3
         },
       plugins: {
         legend: {
+          display: isMobile ? false : true,
           position: "top",
         },
         tooltip: {
@@ -91,8 +95,8 @@ const TimeGraph = () => {
     };
    
     return (
-        <CustomCard className='mb-3'>
-            <div className='chart-container' style={{}}>
+        <CustomCard className='mb-3 chart-card'>
+            <div className='chart-container'>
                 <h4 style={{ textAlign: "center" }}>PROJECT STATISTICS</h4>
                 <Bar
                 data={data}

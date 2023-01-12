@@ -149,16 +149,12 @@ const ProjectScreen = () => {
                       project.developers.map((dev) => (
                         <ListGroup.Item key={dev._id}>
                           <Row>
-                            <Col md={1} sm={1} lg={3} xl={2} className='me-3'>
+                            <Col md={1} xs={2} sm={1} lg={3} xl={2} className='me-3'>
                               {dev.image ? (
                                 <Image
                                   roundedCircle
                                   style={{ width: "2.7rem", height: "2.7rem" }}
-                                  src={
-                                    process.env.NODE_ENV === "development"
-                                      ? `http://localhost:3800${dev.image}`
-                                      : `http://project-manager-x-api.onrender.com${dev.image}`
-                                  }
+                                  src={dev.image}
                                 />
                               ) : (
                                 <PersonCircle
@@ -166,7 +162,7 @@ const ProjectScreen = () => {
                                 />
                               )}
                             </Col>
-                            <Col md={7} sm={7} lg={7} xl={7}>
+                            <Col md={6} xs={7} sm={7} lg={7} xl={7}>
                               <h6>
                                 {dev.firstName} {dev.lastName}
                               </h6>

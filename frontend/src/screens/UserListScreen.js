@@ -50,6 +50,7 @@ const UserListScreen = () => {
               Add User
             </Link>
             </Card.Title>
+            {loading ? <Spinner /> : null}
             <Table striped responsive hover bordered className='table-md'>
               <thead>
                 <tr>
@@ -60,11 +61,8 @@ const UserListScreen = () => {
                   <th>Actions</th>
                 </tr>
               </thead>
-              {loading ? (
-                <Spinner />
-              ) : (
                 <tbody>
-                  {users.map((user) => (
+                  {! loading && users && users.map((user) => (
                     <tr key={user._id}>
                       <td>{user._id}</td>
                       <td>
@@ -99,7 +97,6 @@ const UserListScreen = () => {
                     </tr>
                   ))}
                 </tbody>
-              )}
             </Table>
           </CustomCard>
         </Col>
