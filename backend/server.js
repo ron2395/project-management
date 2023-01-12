@@ -31,9 +31,6 @@ app.use('/tasks', taskRoutes)
 app.use('/upload', uploadRoutes);
 
 
-const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname, 'frontend/build')))
 }

@@ -154,11 +154,7 @@ const ProjectScreen = () => {
                                 <Image
                                   roundedCircle
                                   style={{ width: "2.7rem", height: "2.7rem" }}
-                                  src={
-                                    process.env.NODE_ENV === "development"
-                                      ? `http://localhost:3800${dev.image}`
-                                      : `http://project-manager-x-api.onrender.com${dev.image}`
-                                  }
+                                  src={dev.image}
                                 />
                               ) : (
                                 <PersonCircle

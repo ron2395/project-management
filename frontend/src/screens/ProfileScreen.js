@@ -54,7 +54,9 @@ const ProfileScreen = () => {
       setFirstName(user.firstName);
       setLastName(user.lastName);
       setEmail(user.email);
-      setImage(user.image);
+      if(user.image){
+        setImage(user.image);
+      }
     }
   }, [
     navigate,
@@ -113,16 +115,12 @@ const ProfileScreen = () => {
         {error ? <Message variant='danger'>{error}</Message> : null}
         <CustomCard className='text-center'>
           {!loading && success ? (
-            <Row>
+            <Row className="justify-content-center">
               {user && user.image ? (
                 <Image
                   style={{ height: "12rem", width: "12rem" }}
                   className='rounded-circle'
-                  src={
-                    process.env.NODE_ENV === "development"
-                      ? `http://localhost:3800${user.image}`
-                      : `http://project-manager-x-api.onrender.com${user.image}`
-                  }
+                  src={user.image}
                 />
               ) : (
                 <Card.Title>
