@@ -22,6 +22,14 @@ The below information aims to explain the basic installation for this webapp. Pl
 <li>PORT = port_of_your_choice</li>
 <li>JWT_SECRET = your_choice</li>
 </ul>
+<p>- Please also set the below to use file uploads or set up your own preferred service -</p>
+<ul>
+<li>AWS_BUCKET_NAME = aws_bucker_name</li>
+<li>AWS_ARN = aws_arn</li>
+<li>AWS_BUCKET_REGION = aws_bucket_region</li>
+<li>AWS_ACCESS_KEY = your_aws_access_key</li>
+<li>AWS_SECRET_KEY = your_aws_secret</li>
+</ul>
 
 <h4>User seeder</h4>
 <p>- Only admin can add users -</p>
