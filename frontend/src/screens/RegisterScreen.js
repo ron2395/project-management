@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { register } from '../actions/userActions';
 import Message from '../components/Message';
 import CustomCard from '../components/CustomCard';
@@ -39,9 +39,6 @@ const RegisterScreen = () => {
   return (
     <FormContainer>
       <Col lg={4}>
-        <Link to='/admin/userlist' className='btn btn-light mb-3'>
-          Go Back
-        </Link>
         <CustomCard>
           <Row>
             <h1 className='mb-3 text-center'>New User</h1>

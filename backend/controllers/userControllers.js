@@ -1,5 +1,7 @@
 import User from "../models/userModel.js"
+import Request from '../models/requestModel.js'
 import generateToken from '../utils/generateToken.js'
+import e from "cors"
 
 export const registerUser = async(req, res) => {
     const { firstName, lastName, email, password, role } = req.body
@@ -147,5 +149,40 @@ export const getUserByRole = async(req, res) => {
     return res.json(roleUsers)
   }else{
     res.status(404).send('No users with this role were found')
+  }
+}
+
+export const accountRequest = async(req, res) => {
+  const { email, role } = req.body
+  const requestExists = await Request.exists({ email })
+  if(requestExists){
+    res.status(409).send('Request already exists')
+  }else{
+    const request = await Request.create({
+      email,
+      role
+    })
+    if(request){
+      res.status(200).send('Registered your request')
+    }
+  }
+}
+
+export const getAccountRequests = async(req, res) => {
+  const requests = await Request.find({})
+  if(requests){
+    res.status(200).json(requests)
+  } else {
+    res.status(404).send('No requests registered')
+  }
+}
+
+export const destroyAccountRequest = async(req, res) => {
+  const { requestid } = req.params
+  const destroyedRequest = await Request.deleteOne({ _id: requestid })
+  if(destroyedRequest){
+    res.status(200).send('Removed')
+  }else{
+    res.status(404).send('Request not found')
   }
 }
