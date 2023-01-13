@@ -1,18 +1,17 @@
 import User from "../models/userModel.js"
 import Request from '../models/requestModel.js'
 import generateToken from '../utils/generateToken.js'
-import e from "cors"
 
 export const registerUser = async(req, res) => {
     const { firstName, lastName, email, password, role } = req.body
-    const duplicateEmail = await User.findOne({ email })
+    const duplicateEmail = await User.findOne({ email: email.toLowerCase() });
     if(duplicateEmail){
       return res.status(400).send('Email already registered')
     }
     const newUser = await User.create({
         firstName,
         lastName,
-        email,
+        email: email.toLowerCase(),
         password,
         role
     })
@@ -30,7 +29,7 @@ export const registerUser = async(req, res) => {
 
 export const authUser = async(req, res) => {
         const { email, password } = req.body;
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email: email.toLowerCase() });
         if(user && (await user.matchPasswords(password))){
             return res.json({
               firstName: user.firstName,
@@ -63,7 +62,7 @@ export const updateUser = async (req, res) => {
   if(user){
     user.firstName = firstName || user.firstName
     user.lastName = lastName || user.lastName
-    user.email = email || user.email
+    user.email = email.toLowerCase() || user.email
     user.role = role || user.role
 
     if(password){

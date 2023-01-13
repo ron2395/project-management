@@ -33,7 +33,7 @@ const RegisterScreen = () => {
   const submitHandler = async(e) => {
     e.preventDefault();
     
-    dispatch(register(firstName, lastName, email, password, role));
+    dispatch(register(firstName, lastName, email.toLowerCase(), password, role));
   };
 
   return (

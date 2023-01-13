@@ -35,7 +35,7 @@ const LoginScreen = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(login(email, password))
+        dispatch(login(email.toLowerCase(), password))
     }
 
     const requestSubmitHandler = async(e) => {
