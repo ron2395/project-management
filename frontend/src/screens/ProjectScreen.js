@@ -149,7 +149,14 @@ const ProjectScreen = () => {
                       project.developers.map((dev) => (
                         <ListGroup.Item key={dev._id}>
                           <Row>
-                            <Col md={1} xs={2} sm={1} lg={3} xl={2} className='me-3'>
+                            <Col
+                              md={1}
+                              xs={2}
+                              sm={1}
+                              lg={3}
+                              xl={2}
+                              className='me-3'
+                            >
                               {dev.image ? (
                                 <Image
                                   roundedCircle
@@ -304,44 +311,62 @@ const ProjectScreen = () => {
                       {project.remarks && project.remarks.length ? (
                         project.remarks.map((remark) => (
                           <ListGroup.Item key={remark._id}>
-                            <div className='ms-2 me-auto'>
-                              <div className='fw-bold d-flex justify-content-between'>
-                                {remark.user.firstName} {remark.user.lastName}
-                                {userInfo &&
-                                userInfo._id.toString() ===
-                                  remark.user._id.toString() ? (
-                                  <div>
-                                    <PencilSquare
-                                      style={{
-                                        cursor: "pointer",
-                                        fontSize: "1.3rem",
-                                      }}
-                                      className='me-3'
-                                      onClick={() =>
-                                        editRemarkPageHandler(remark._id)
-                                      }
-                                    />
-                                    <Trash
-                                      style={{
-                                        cursor: "pointer",
-                                        fontSize: "1.3rem",
-                                      }}
-                                      onClick={() => deleteRemark(remark._id)}
-                                    />
+                            <Row>
+                              <Col xl={2} md={1} lg={2} sm={2} xs={2}>
+                                {remark.user.image ? (
+                                  <Image
+                                    className='mt-3'
+                                    roundedCircle
+                                    style={{ width: "2.7rem", height: "2.7rem" }}
+                                    src={remark.user.image}
+                                  />
+                                ) : (
+                                  <PersonCircle
+                                    style={{ width: "2.7rem", height: "2.7rem" }}
+                                  />
+                                )}
+                              </Col>
+                              <Col xl={10} lg={10} md={11} sm={10} xs={10}>
+                                  <div className='fw-bold d-flex justify-content-between'>
+                                    {remark.user.firstName} {remark.user.lastName}
+                                    {userInfo &&
+                                    userInfo._id.toString() ===
+                                      remark.user._id.toString() ? (
+                                      <div>
+                                        <PencilSquare
+                                          style={{
+                                            cursor: "pointer",
+                                            fontSize: "1.3rem",
+                                          }}
+                                          className='me-3'
+                                          onClick={() =>
+                                            editRemarkPageHandler(remark._id)
+                                          }
+                                        />
+                                        <Trash
+                                          style={{
+                                            cursor: "pointer",
+                                            fontSize: "1.3rem",
+                                          }}
+                                          onClick={() => deleteRemark(remark._id)}
+                                        />
+                                      </div>
+                                    ) : null}
                                   </div>
-                                ) : null}
-                              </div>
-                              <Badge className='ms-auto' bg='primary' pill>
-                                {remark.user.role === "0"
-                                  ? "Admin"
-                                  : remark.user.role === "1"
-                                  ? "Project manager"
-                                  : null}
-                              </Badge>
-                            </div>
-                            <div className='ms-2 mt-2 me-auto'>
-                              {remark.comment}
-                            </div>
+                                  <Badge className='ms-auto' bg='primary' pill>
+                                    {remark.user.role === "0"
+                                      ? "Admin"
+                                      : remark.user.role === "1"
+                                      ? "Project manager"
+                                      : remark.user.role === "2"
+                                      ? "Developer"
+                                      : null}
+                                  </Badge>
+                                <div className='ms-2 mt-2 me-auto'>
+                                  {remark.comment}
+                                </div>
+                              </Col>
+                            </Row>
                           </ListGroup.Item>
                         ))
                       ) : (

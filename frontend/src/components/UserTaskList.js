@@ -6,6 +6,7 @@ import CustomCard from "./CustomCard";
 import Task from "./Task";
 import Loader from "./Loader";
 import Message from "./Message";
+import { listProjects } from "../actions/projectActions";
 import { listUserTasks } from "../actions/taskActions";
 
 const UserTaskList = () => {
@@ -22,7 +23,8 @@ const UserTaskList = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.role === '2') {
-      dispatch(listUserTasks(userid));
+      dispatch(listUserTasks(userid))
+      dispatch(listProjects())
     } else {
       navigate("/");
     }
@@ -36,7 +38,7 @@ const UserTaskList = () => {
       <ListGroup>
         {error ? <Message variant='danger'>{error}</Message> : null}
         {loading ? <Loader /> : success && tasks.length ?
-        tasks.map((task, i) => <Task task={task} />) :
+        tasks.map((task, i) => <Task key={i} projectid={task.projectId} task={task} />) :
         <h2 className="mt-4">No tasks assigned</h2>}
       </ListGroup>
     </CustomCard>

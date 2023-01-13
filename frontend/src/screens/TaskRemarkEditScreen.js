@@ -82,11 +82,7 @@ const TaskRemarkEditScreen = () => {
                     <Image
                       thumbnail
                       roundedCircle
-                      src={
-                        process.env.NODE_ENV === "development"
-                          ? `http://localhost:3800${user.image}`
-                          : `http://project-manager-x-api.onrender.com${user.image}`
-                      }
+                      src={user.image}
                       style={{ width: "4rem", height: "4rem" }}
                     />
                   ) : (
